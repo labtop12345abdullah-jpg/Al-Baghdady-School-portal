@@ -1,370 +1,262 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Albaghdady School Portal</title>
-
+<title>بوابة مدرسة ثانوية البغدادي للبنين</title>
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Tahoma, Arial, sans-serif;
-    background: linear-gradient(135deg, #d8edff, #ffffff, #b7dfff);
-    color: #08265a;
-}
-
-/* الشريط العلوي */
-header {
-    background: #061d50;
-    color: white;
-    padding: 18px 5%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 5px solid #e9bd38;
-}
-
-header h2 {
-    font-size: 23px;
-}
-
-header span {
-    font-size: 15px;
-}
-
-/* الشعار */
-.school-title {
-    text-align: center;
-    margin: 35px auto;
-    padding: 30px 15px;
-    max-width: 950px;
-    background: #061d50;
-    color: white;
-    border: 5px solid #e9bd38;
-    border-radius: 35px;
-    box-shadow: 0 8px 20px #0003;
-}
-
-.school-title h1 {
-    font-size: 38px;
-    margin-bottom: 10px;
-}
-
-.school-title h2 {
-    color: #f5ca42;
-    font-size: 30px;
-}
-
-/* الترحيب */
-.welcome {
-    text-align: center;
-    padding: 30px 15px;
-}
-
-.welcome h2 {
-    font-size: 30px;
-    margin-bottom: 12px;
-}
-
-.welcome p {
-    font-size: 20px;
-}
-
-/* البوابات */
-.portals {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-    max-width: 1100px;
-    margin: 30px auto;
-    padding: 15px;
-}
-
-.portal {
-    background: white;
-    border-radius: 25px;
-    padding: 25px 15px;
-    text-align: center;
-    box-shadow: 0 5px 15px #0002;
-    border: 3px solid #d5ad32;
-    transition: 0.3s;
-}
-
-.portal:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 10px 25px #0003;
-}
-
-.icon {
-    width: 85px;
-    height: 85px;
-    border-radius: 50%;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 43px;
-    color: white;
-}
-
-.student .icon {
-    background: #0879d1;
-}
-
-.teacher .icon {
-    background: #07884f;
-}
-
-.admin .icon {
-    background: #e6a000;
-}
-
-.portal h2 {
-    margin: 18px 0 8px;
-    font-size: 25px;
-}
-
-.portal p {
-    line-height: 1.8;
-    min-height: 55px;
-    color: #333;
-}
-
-.portal button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 30px;
-    color: white;
-    font-size: 19px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.student button {
-    background: #0879d1;
-}
-
-.teacher button {
-    background: #07884f;
-}
-
-.admin button {
-    background: #e6a000;
-}
-
-/* نافذة تسجيل الدخول */
-.login-box {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #0009;
-    z-index: 10;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-}
-
-.login-content {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-}
-
-.login-content h2 {
-    margin-bottom: 20px;
-}
-
-.login-content input {
-    width: 100%;
-    padding: 13px;
-    margin: 8px 0;
-    border: 1px solid #aaa;
-    border-radius: 10px;
-    font-size: 16px;
-}
-
-.login-content button {
-    width: 100%;
-    padding: 13px;
-    margin-top: 12px;
-    background: #08265a;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 17px;
-    cursor: pointer;
-}
-
-.close {
-    background: #b92727 !important;
-}
-
-/* التذييل */
-footer {
-    background: #061d50;
-    color: white;
-    text-align: center;
-    padding: 25px 10px;
-    border-top: 5px solid #e9bd38;
-    margin-top: 40px;
-    line-height: 2;
-}
-
-footer strong {
-    color: #f5ca42;
-}
-
-/* الهاتف */
-@media (max-width: 750px) {
-    header {
-        flex-direction: column;
-        gap: 10px;
-        text-align: center;
-    }
-
-    .school-title h1 {
-        font-size: 25px;
-    }
-
-    .school-title h2 {
-        font-size: 22px;
-    }
-
-    .portals {
-        grid-template-columns: 1fr;
-        max-width: 420px;
-    }
-
-    .welcome h2 {
-        font-size: 23px;
-    }
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial;background:#edf4ff;color:#102b55}
+header{background:#061d50;color:white;text-align:center;padding:22px;border-bottom:5px solid #e9bd38}
+.school{text-align:center;background:#09265c;color:white;margin:25px auto;padding:30px 12px;width:92%;border:4px solid #e9bd38;border-radius:22px}
+.school h1{font-size:28px}
+.school h2{color:#f5ca42}
+.welcome{text-align:center;padding:15px}
+.portals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1050px;margin:25px auto;padding:15px}
+.portal{background:white;border:2px solid #d5ad32;border-radius:18px;padding:25px 15px;text-align:center;box-shadow:0 4px 12px #0002}
+.portal .icon{font-size:45px}
+.portal h2{margin:12px}
+.portal p{line-height:1.8}
+button{background:#0879d1;color:white;border:0;border-radius:9px;padding:12px 18px;font-size:16px;cursor:pointer;margin-top:10px}
+.portal button{width:100%}
+.teacher button{background:#07884f}
+.admin button{background:#d99400}
+.login-box{display:none;position:fixed;inset:0;background:#0009;z-index:5;align-items:center;justify-content:center;padding:15px}
+.login-content{background:white;padding:25px;border-radius:18px;width:100%;max-width:390px;text-align:center}
+input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #aaa;border-radius:8px;font-size:16px}
+.login-content button{width:100%}
+.close{background:#b92727}
+.dashboard{display:none;max-width:1000px;margin:25px auto;padding:15px}
+.dashboard-head{background:#061d50;color:white;text-align:center;padding:22px;border-radius:18px;border:3px solid #e9bd38}
+.dashboard-head h2{color:#f5ca42}
+.student-info{background:white;padding:18px;border-radius:12px;margin:18px 0;line-height:2}
+.student-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.student-card{background:white;border:2px solid #d5ad32;border-radius:15px;text-align:center;padding:22px;cursor:pointer}
+.student-card .big-icon{font-size:35px}
+.section-view{display:none;background:white;border-radius:15px;padding:20px;margin-top:18px;line-height:2;overflow-x:auto}
+.section-view h3{color:#0879d1}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #bbb;padding:10px;text-align:center}
+th{background:#e5f1ff}
+footer{background:#061d50;color:white;text-align:center;padding:22px;margin-top:35px;line-height:2}
+footer strong{color:#f5ca42}
+@media(max-width:700px){
+.portals{grid-template-columns:1fr;max-width:420px}
+.school h1{font-size:22px}
+.student-menu{grid-template-columns:1fr}
 }
 </style>
 </head>
-
 <body>
 
 <header>
-    <h2>📘 Albaghdady Secondary School Portal</h2>
-    <span id="date"></span>
+<h2>📘 Albaghdady School Portal</h2>
+<p>بوابة مدرسة ثانوية البغدادي للبنين</p>
 </header>
 
-<section class="school-title">
-    <h1>🎓 مدرسة ثانوية البغدادي للبنين</h1>
-    <h2>Albaghdady Secondary School</h2>
+<section class="school">
+<h1>🎓 مدرسة ثانوية البغدادي للبنين</h1>
+<h2>Albaghdady Secondary School</h2>
 </section>
 
 <section class="welcome">
-    <h2>أهلاً وسهلاً بكم</h2>
-    <p>في بوابة مدرسة ثانوية البغدادي للبنين</p>
-    <p>Welcome to Albaghdady Secondary School</p>
+<h2>أهلاً وسهلاً بكم</h2>
+<p>في البوابة الإلكترونية لمدرسة ثانوية البغدادي للبنين</p>
+<p>Welcome to Albaghdady Secondary School</p>
 </section>
 
-<section class="portals">
+<section class="portals" id="mainPortals">
 
-    <div class="portal student">
-        <div class="icon">🎓</div>
-        <h2>بوابة الطالب</h2>
-        <p>
-            متابعة الحضور والغياب<br>
-            والجدول الدراسي والنتائج
-        </p>
-        <button onclick="openLogin('الطالب')">
-            ➜ دخول الطالب
-        </button>
-    </div>
+<div class="portal">
+<div class="icon">🎓</div>
+<h2>بوابة الطالب</h2>
+<p>متابعة الحضور والغياب والجدول الدراسي والنتائج</p>
+<button onclick="openLogin('student')">دخول الطالب</button>
+</div>
 
-    <div class="portal teacher">
-        <div class="icon">👨‍🏫</div>
-        <h2>بوابة المدرس</h2>
-        <p>
-            متابعة الطلبة والحضور<br>
-            والإشعارات
-        </p>
-        <button onclick="openLogin('المدرس')">
-            ➜ دخول المدرس
-        </button>
-    </div>
+<div class="portal teacher">
+<div class="icon">👨‍🏫</div>
+<h2>بوابة المدرس</h2>
+<p>بوابة خاصة بالمدرسين والموظفين</p>
+<button onclick="openLogin('teacher')">دخول المدرس</button>
+</div>
 
-    <div class="portal admin">
-        <div class="icon">🛡️</div>
-        <h2>بوابة المدير</h2>
-        <p>
-            إدارة شؤون المدرسة<br>
-             ومتابعة الكادر والطلبة
-        </p>
-        <button onclick="openLogin('المدير')">
-            ➜ دخول المدير
-        </button>
-    </div>
+<div class="portal admin">
+<div class="icon">🔐</div>
+<h2>الإدارة</h2>
+<p>بوابة إدارة المدرسة</p>
+<button onclick="openLogin('admin')">دخول الإدارة</button>
+</div>
 
 </section>
 
 <div class="login-box" id="loginBox">
-    <div class="login-content">
-        <h2 id="loginTitle">تسجيل الدخول</h2>
-
-        <input
-            type="text"
-            id="username"
-            placeholder="الرقم المدرسي أو الوظيفي"
-        >
-
-        <input
-            type="password"
-            id="password"
-            placeholder="كلمة المرور"
-        >
-
-        <button onclick="demoLogin()">
-            تسجيل الدخول
-        </button>
-
-        <button class="close" onclick="closeLogin()">
-            إغلاق
-        </button>
-    </div>
+<div class="login-content">
+<h2 id="loginTitle">تسجيل الدخول</h2>
+<input id="username" type="text" placeholder="رقم الطالب">
+<input id="password" type="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+<button class="close" onclick="closeLogin()">إغلاق</button>
+<p style="font-size:13px;color:#555;line-height:1.8">
+حساب الطالب التجريبي: 1001<br>
+كلمة المرور: 123456
+</p>
+</div>
 </div>
 
+<section class="dashboard" id="dashboard">
+<div class="dashboard-head">
+<h2>🎓 لوحة الطالب الإلكترونية</h2>
+<p>مرحباً بك في حسابك المدرسي</p>
+</div>
+
+<div class="student-info">
+<strong>اسم الطالب:</strong> أحمد محمد (بيانات تجريبية)<br>
+<strong>رقم الطالب:</strong> 1001<br>
+<strong>المدرسة:</strong> ثانوية البغدادي للبنين
+</div>
+
+<div class="student-menu">
+<div class="student-card" onclick="showSection('timetable')">
+<div class="big-icon">📅</div>
+<h3>الجدول الدراسي</h3>
+</div>
+<div class="student-card" onclick="showSection('results')">
+<div class="big-icon">📚</div>
+<h3>النتائج والدرجات</h3>
+</div>
+<div class="student-card" onclick="showSection('attendance')">
+<div class="big-icon">📝</div>
+<h3>الحضور والغياب</h3>
+</div>
+<div class="student-card" onclick="showSection('objections')">
+<div class="big-icon">📨</div>
+<h3>الاعتراضات</h3>
+</div>
+</div>
+
+<div class="section-view" id="timetable">
+<h3>📅 الجدول الدراسي</h3>
+<table>
+<tr><th>اليوم</th><th>المادة</th><th>الوقت</th></tr>
+<tr><td>الأحد</td><td>الرياضيات</td><td>8:00</td></tr>
+<tr><td>الاثنين</td><td>اللغة العربية</td><td>9:00</td></tr>
+<tr><td>الثلاثاء</td><td>اللغة الإنجليزية</td><td>10:00</td></tr>
+<tr><td>الأربعاء</td><td>الفيزياء</td><td>8:00</td></tr>
+<tr><td>الخميس</td><td>الكيمياء</td><td>9:00</td></tr>
+</table>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="results">
+<h3>📚 النتائج والدرجات</h3>
+<table>
+<tr><th>المادة</th><th>الدرجة التجريبية</th></tr>
+<tr><td>الرياضيات</td><td>85</td></tr>
+<tr><td>اللغة العربية</td><td>90</td></tr>
+<tr><td>اللغة الإنجليزية</td><td>80</td></tr>
+<tr><td>الفيزياء</td><td>88</td></tr>
+<tr><td>الكيمياء</td><td>92</td></tr>
+</table>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="attendance">
+<h3>📝 الحضور والغياب</h3>
+<table>
+<tr><th>البيان</th><th>العدد التجريبي</th></tr>
+<tr><td>أيام الحضور</td><td>20</td></tr>
+<tr><td>أيام الغياب</td><td>2</td></tr>
+<tr><td>التأخير</td><td>1</td></tr>
+</table>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="objections">
+<h3>📨 تقديم اعتراض</h3>
+<p>اكتب موضوع الاعتراض هنا:</p>
+<input id="objectionSubject" placeholder="موضوع الاعتراض">
+<textarea id="objectionText" placeholder="اكتب تفاصيل الاعتراض"></textarea>
+<button onclick="sendObjection()">إرسال الاعتراض التجريبي</button>
+<p id="objectionMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
 <footer>
-    <p>
-        إعداد وتطوير المهندس
-        <strong>عبدالله حسام العبيدي</strong>
-    </p>
-    <p>Albaghdady School © 2026</p>
-    <p>Together for a better educational future</p>
+<p>إعداد وتطوير المهندس عبدالله حسام العبيدي</p>
+<strong>Albaghdady School © 2026</strong>
 </footer>
 
 <script>
-document.getElementById("date").textContent =
-    new Date().toLocaleDateString("ar-IQ");
+let currentRole="";
 
-let selectedRole = "";
-
-function openLogin(role) {
-    selectedRole = role;
-    document.getElementById("loginTitle").textContent =
-        "تسجيل دخول " + role;
-
-    document.getElementById("loginBox").style.display = "flex";
+function openLogin(role){
+currentRole=role;
+document.getElementById("loginTitle").textContent=
+role==="student"?"دخول الطالب":
+role==="teacher"?"دخول المدرس":"دخول الإدارة";
+document.getElementById("loginBox").style.display="flex";
+document.getElementById("username").value="";
+document.getElementById("password").value="";
 }
 
-function closeLogin() {
-    document.getElementById("loginBox").style.display = "none";
+function closeLogin(){
+document.getElementById("loginBox").style.display="none";
 }
 
-function demoLogin() {
-    alert("هذه واجهة تجريبية. لم يتم تفعيل نظام الحسابات بعد.");
+function login(){
+let username=document.getElementById("username").value.trim();
+let password=document.getElementById("password").value;
+
+if(currentRole==="student" && username==="1001" && password==="123456"){
+closeLogin();
+document.getElementById("mainPortals").style.display="none";
+document.querySelector(".welcome").style.display="none";
+document.querySelector(".school").style.display="none";
+document.getElementById("dashboard").style.display="block";
+}else if(currentRole==="teacher" || currentRole==="admin"){
+alert("حسابات المدرسين والإدارة غير مفعّلة في النسخة التجريبية.");
+}else{
+alert("رقم الطالب أو كلمة المرور غير صحيحة.");
+}
+}
+
+function showSection(id){
+hideSections();
+document.getElementById(id).style.display="block";
+}
+
+function hideSections(){
+document.querySelectorAll(".section-view").forEach(function(section){
+section.style.display="none";
+});
+}
+
+function logout(){
+hideSections();
+document.getElementById("dashboard").style.display="none";
+document.getElementById("mainPortals").style.display="grid";
+document.querySelector(".welcome").style.display="block";
+document.querySelector(".school").style.display="block";
+}
+
+function sendObjection(){
+let subject=document.getElementById("objectionSubject").value.trim();
+let message=document.getElementById("objectionText").value.trim();
+
+if(subject==="" || message===""){
+alert("يرجى كتابة موضوع الاعتراض والتفاصيل.");
+return;
+}
+
+document.getElementById("objectionMessage").textContent=
+"تم تسجيل الاعتراض تجريبياً داخل الصفحة فقط.";
+document.getElementById("objectionSubject").value="";
+document.getElementById("objectionText").value="";
 }
 </script>
 
