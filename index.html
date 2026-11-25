@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -18,33 +17,43 @@ header{background:#061d50;color:white;text-align:center;padding:22px;border-bott
 .portal .icon{font-size:45px}
 .portal h2{margin:12px}
 .portal p{line-height:1.8}
-button{background:#0879d1;color:white;border:0;border-radius:9px;padding:12px 18px;font-size:16px;cursor:pointer;margin-top:10px}
+button{background:#0879d1;color:white;border:0;border-radius:9px;padding:12px 18px;font-size:16px;cursor:pointer;margin:5px 2px}
+button:hover{filter:brightness(.94)}
 .portal button{width:100%}
 .teacher button{background:#07884f}
-.admin button{background:#d99400}
+.admin-button{background:#d99400}
 .login-box{display:none;position:fixed;inset:0;background:#0009;z-index:5;align-items:center;justify-content:center;padding:15px}
 .login-content{background:white;padding:25px;border-radius:18px;width:100%;max-width:390px;text-align:center}
-input,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #aaa;border-radius:8px;font-size:16px}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border:1px solid #aaa;border-radius:8px;font-size:16px;font-family:inherit}
+textarea{min-height:85px;resize:vertical}
 .login-content button{width:100%}
 .close{background:#b92727}
-.dashboard{display:none;max-width:1000px;margin:25px auto;padding:15px}
+.dashboard{display:none;max-width:1100px;margin:25px auto;padding:15px}
 .dashboard-head{background:#061d50;color:white;text-align:center;padding:22px;border-radius:18px;border:3px solid #e9bd38}
 .dashboard-head h2{color:#f5ca42}
-.student-info{background:white;padding:18px;border-radius:12px;margin:18px 0;line-height:2}
-.student-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.student-card{background:white;border:2px solid #d5ad32;border-radius:15px;text-align:center;padding:22px;cursor:pointer}
-.student-card .big-icon{font-size:35px}
+.student-info,.info-box{background:white;padding:18px;border-radius:12px;margin:18px 0;line-height:2}
+.student-menu,.admin-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.student-card,.admin-card{background:white;border:2px solid #d5ad32;border-radius:15px;text-align:center;padding:22px;cursor:pointer}
+.admin-card{min-height:145px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.student-card .big-icon,.admin-card .big-icon{font-size:35px}
+.admin-card h3{margin:8px 0}
 .section-view{display:none;background:white;border-radius:15px;padding:20px;margin-top:18px;line-height:2;overflow-x:auto}
 .section-view h3{color:#0879d1}
-table{width:100%;border-collapse:collapse;margin-top:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px;background:white}
 th,td{border:1px solid #bbb;padding:10px;text-align:center}
 th{background:#e5f1ff}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.form-actions{margin-top:8px}
+.small{font-size:13px;color:#555;line-height:1.8}
+.notice{background:#fff8df;border-right:4px solid #d99400;padding:12px;border-radius:8px;margin:12px 0}
+.success{color:#087b43;font-weight:bold}
+.danger{color:#b92727}
 footer{background:#061d50;color:white;text-align:center;padding:22px;margin-top:35px;line-height:2}
 footer strong{color:#f5ca42}
 @media(max-width:700px){
 .portals{grid-template-columns:1fr;max-width:420px}
 .school h1{font-size:22px}
-.student-menu{grid-template-columns:1fr}
+.student-menu,.admin-menu,.form-grid{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -55,131 +64,263 @@ footer strong{color:#f5ca42}
 <p>بوابة مدرسة ثانوية البغدادي للبنين</p>
 </header>
 
-<section class="school">
+<section class="school" id="schoolBanner">
 <h1>🎓 مدرسة ثانوية البغدادي للبنين</h1>
 <h2>Albaghdady Secondary School</h2>
 </section>
 
-<section class="welcome">
+<section class="welcome" id="welcome">
 <h2>أهلاً وسهلاً بكم</h2>
 <p>في البوابة الإلكترونية لمدرسة ثانوية البغدادي للبنين</p>
 <p>Welcome to Albaghdady Secondary School</p>
 </section>
 
 <section class="portals" id="mainPortals">
-
 <div class="portal">
-<div class="icon">🎓</div>
-<h2>بوابة الطالب</h2>
+<div class="icon">🎓</div><h2>بوابة الطالب</h2>
 <p>متابعة الحضور والغياب والجدول الدراسي والنتائج</p>
 <button onclick="openLogin('student')">دخول الطالب</button>
 </div>
 
 <div class="portal teacher">
-<div class="icon">👨‍🏫</div>
-<h2>بوابة المدرس</h2>
+<div class="icon">👨‍🏫</div><h2>بوابة المدرس</h2>
 <p>بوابة خاصة بالمدرسين والموظفين</p>
 <button onclick="openLogin('teacher')">دخول المدرس</button>
 </div>
 
-<div class="portal admin">
-<div class="icon">🔐</div>
-<h2>الإدارة</h2>
+<div class="portal">
+<div class="icon">🔐</div><h2>الإدارة</h2>
 <p>بوابة إدارة المدرسة</p>
-<button onclick="openLogin('admin')">دخول الإدارة</button>
+<button class="admin-button" onclick="openLogin('admin')">دخول الإدارة</button>
 </div>
-
 </section>
 
 <div class="login-box" id="loginBox">
 <div class="login-content">
 <h2 id="loginTitle">تسجيل الدخول</h2>
-<input id="username" type="text" placeholder="رقم الطالب">
+<input id="username" type="text" placeholder="اسم المستخدم أو الرقم">
 <input id="password" type="password" placeholder="كلمة المرور">
 <button onclick="login()">دخول</button>
 <button class="close" onclick="closeLogin()">إغلاق</button>
-<p style="font-size:13px;color:#555;line-height:1.8">
-حساب الطالب التجريبي: 1001<br>
-كلمة المرور: 123456
-</p>
+<p class="small" id="demoCredentials">حساب الطالب التجريبي: 1001<br>كلمة المرور: 123456</p>
 </div>
 </div>
 
-<section class="dashboard" id="dashboard">
+<!-- لوحة الطالب -->
+<section class="dashboard" id="studentDashboard">
 <div class="dashboard-head">
 <h2>🎓 لوحة الطالب الإلكترونية</h2>
 <p>مرحباً بك في حسابك المدرسي</p>
 </div>
 
-<div class="student-info">
-<strong>اسم الطالب:</strong> أحمد محمد (بيانات تجريبية)<br>
-<strong>رقم الطالب:</strong> 1001<br>
-<strong>المدرسة:</strong> ثانوية البغدادي للبنين
-</div>
+<div class="student-info" id="studentInfo"></div>
 
 <div class="student-menu">
-<div class="student-card" onclick="showSection('timetable')">
-<div class="big-icon">📅</div>
-<h3>الجدول الدراسي</h3>
+<div class="student-card" onclick="showSection('studentTimetable')">
+<div class="big-icon">📅</div><h3>الجدول الدراسي</h3>
 </div>
-<div class="student-card" onclick="showSection('results')">
-<div class="big-icon">📚</div>
-<h3>النتائج والدرجات</h3>
+<div class="student-card" onclick="showSection('studentResults')">
+<div class="big-icon">📚</div><h3>النتائج والدرجات</h3>
 </div>
-<div class="student-card" onclick="showSection('attendance')">
-<div class="big-icon">📝</div>
-<h3>الحضور والغياب</h3>
+<div class="student-card" onclick="showSection('studentAttendance')">
+<div class="big-icon">📝</div><h3>الحضور والغياب</h3>
 </div>
-<div class="student-card" onclick="showSection('objections')">
-<div class="big-icon">📨</div>
-<h3>الاعتراضات</h3>
+<div class="student-card" onclick="showSection('studentObjections')">
+<div class="big-icon">📨</div><h3>الاعتراضات</h3>
+</div>
+<div class="student-card" onclick="showSection('studentNotices')">
+<div class="big-icon">🔔</div><h3>الإشعارات</h3>
 </div>
 </div>
 
-<div class="section-view" id="timetable">
+<div class="section-view" id="studentTimetable">
 <h3>📅 الجدول الدراسي</h3>
-<table>
-<tr><th>اليوم</th><th>المادة</th><th>الوقت</th></tr>
-<tr><td>الأحد</td><td>الرياضيات</td><td>8:00</td></tr>
-<tr><td>الاثنين</td><td>اللغة العربية</td><td>9:00</td></tr>
-<tr><td>الثلاثاء</td><td>اللغة الإنجليزية</td><td>10:00</td></tr>
-<tr><td>الأربعاء</td><td>الفيزياء</td><td>8:00</td></tr>
-<tr><td>الخميس</td><td>الكيمياء</td><td>9:00</td></tr>
-</table>
+<div id="studentTimetableContent"></div>
 <button onclick="hideSections()">رجوع</button>
 </div>
 
-<div class="section-view" id="results">
+<div class="section-view" id="studentResults">
 <h3>📚 النتائج والدرجات</h3>
-<table>
-<tr><th>المادة</th><th>الدرجة التجريبية</th></tr>
-<tr><td>الرياضيات</td><td>85</td></tr>
-<tr><td>اللغة العربية</td><td>90</td></tr>
-<tr><td>اللغة الإنجليزية</td><td>80</td></tr>
-<tr><td>الفيزياء</td><td>88</td></tr>
-<tr><td>الكيمياء</td><td>92</td></tr>
-</table>
+<div id="studentResultsContent"></div>
 <button onclick="hideSections()">رجوع</button>
 </div>
 
-<div class="section-view" id="attendance">
+<div class="section-view" id="studentAttendance">
 <h3>📝 الحضور والغياب</h3>
-<table>
-<tr><th>البيان</th><th>العدد التجريبي</th></tr>
-<tr><td>أيام الحضور</td><td>20</td></tr>
-<tr><td>أيام الغياب</td><td>2</td></tr>
-<tr><td>التأخير</td><td>1</td></tr>
-</table>
+<div id="studentAttendanceContent"></div>
 <button onclick="hideSections()">رجوع</button>
 </div>
 
-<div class="section-view" id="objections">
+<div class="section-view" id="studentObjections">
 <h3>📨 تقديم اعتراض</h3>
-<p>اكتب موضوع الاعتراض هنا:</p>
 <input id="objectionSubject" placeholder="موضوع الاعتراض">
 <textarea id="objectionText" placeholder="اكتب تفاصيل الاعتراض"></textarea>
 <button onclick="sendObjection()">إرسال الاعتراض التجريبي</button>
 <p id="objectionMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="studentNotices">
+<h3>🔔 الإشعارات</h3>
+<div id="studentNoticesContent"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<!-- لوحة المدرس التجريبية -->
+<section class="dashboard" id="teacherDashboard">
+<div class="dashboard-head">
+<h2>👨‍🏫 لوحة المدرس</h2>
+<p id="teacherWelcome"></p>
+</div>
+<div class="info-box">هذه لوحة مدرس تجريبية. في هذه النسخة يستطيع المدرس الاطلاع على بيانات صفه التجريبية فقط.</div>
+<div class="section-view" style="display:block">
+<h3>📢 إشعارات الإدارة</h3>
+<div id="teacherNotices"></div>
+</div>
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<!-- لوحة المدير -->
+<section class="dashboard" id="adminDashboard">
+<div class="dashboard-head">
+<h2>🛡️ لوحة المدير الرئيسية</h2>
+<p>Albaghdady School Administration</p>
+<p style="color:#70d080;font-weight:bold">صلاحيات المدير التجريبية</p>
+</div>
+
+<div class="notice small">
+هذه نسخة تجريبية محلية. البيانات تحفظ في متصفح هذا الجهاز فقط، ولا تنتقل تلقائياً إلى أجهزة أخرى.
+</div>
+
+<div class="admin-menu">
+<div class="admin-card" onclick="showSection('manageStudents')">
+<div class="big-icon">👥</div><h3>إدارة الطلاب</h3>
+</div>
+<div class="admin-card" onclick="showSection('addStudent')">
+<div class="big-icon">👤</div><h3>إضافة طالب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageTeachers')">
+<div class="big-icon">🎓</div><h3>إدارة المدرسين</h3>
+</div>
+<div class="admin-card" onclick="showSection('addTeacher')">
+<div class="big-icon">👨‍🏫</div><h3>إضافة مدرس</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageClasses')">
+<div class="big-icon">🏫</div><h3>إدارة الصفوف والشُعب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageTimetable')">
+<div class="big-icon">📅</div><h3>الجداول الدراسية</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageAttendance')">
+<div class="big-icon">📝</div><h3>الحضور والغياب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageGrades')">
+<div class="big-icon">📊</div><h3>النتائج والدرجات</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageObjections')">
+<div class="big-icon">📨</div><h3>الاعتراضات</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageNotices')">
+<div class="big-icon">🔔</div><h3>الإشعارات</h3>
+</div>
+</div>
+
+<div class="section-view" id="addTeacher">
+<h3>➕ إضافة مدرس</h3>
+<div class="form-grid">
+<input id="newTeacherName" placeholder="اسم المدرس">
+<input id="newTeacherId" placeholder="رقم المدرس / اسم المستخدم">
+<input id="newTeacherPass" placeholder="كلمة المرور التجريبية">
+<input id="newTeacherSubject" placeholder="المادة">
+</div>
+<button onclick="addTeacher()">حفظ المدرس</button>
+<p id="teacherFormMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageTeachers">
+<h3>🎓 إدارة المدرسين</h3>
+<div id="teachersTable"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="addStudent">
+<h3>➕ إضافة طالب</h3>
+<div class="form-grid">
+<input id="newStudentName" placeholder="اسم الطالب">
+<input id="newStudentId" placeholder="رقم الطالب / اسم المستخدم">
+<input id="newStudentPass" placeholder="كلمة المرور التجريبية">
+<input id="newStudentClass" placeholder="الصف والشعبة، مثال: الرابع / أ">
+</div>
+<button onclick="addStudent()">حفظ الطالب</button>
+<p id="studentFormMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageStudents">
+<h3>👥 إدارة الطلاب</h3>
+<div id="studentsTable"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageClasses">
+<h3>🏫 الصفوف والشُعب</h3>
+<input id="className" placeholder="اسم الصف والشعبة، مثال: الخامس العلمي / أ">
+<button onclick="addClass()">إضافة الصف/الشعبة</button>
+<div id="classesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageTimetable">
+<h3>📅 إضافة جدول دراسي</h3>
+<input id="timetableClass" placeholder="الصف والشعبة">
+<textarea id="timetableText" placeholder="اكتب الجدول: الأحد - رياضيات - 8:00&#10;الاثنين - عربي - 9:00"></textarea>
+<button onclick="saveTimetable()">حفظ الجدول</button>
+<div id="timetablesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageAttendance">
+<h3>📝 تسجيل حضور أو غياب</h3>
+<div class="form-grid">
+<input id="attendanceStudentId" placeholder="رقم الطالب">
+<select id="attendanceStatus">
+<option value="حاضر">حاضر</option>
+<option value="غائب">غائب</option>
+<option value="متأخر">متأخر</option>
+</select>
+</div>
+<button onclick="saveAttendance()">حفظ الحالة</button>
+<div id="attendanceList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageGrades">
+<h3>📊 إدخال درجة</h3>
+<div class="form-grid">
+<input id="gradeStudentId" placeholder="رقم الطالب">
+<input id="gradeSubject" placeholder="المادة">
+<input id="gradeValue" type="number" min="0" max="100" placeholder="الدرجة من 100">
+</div>
+<button onclick="saveGrade()">حفظ الدرجة</button>
+<div id="gradesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageObjections">
+<h3>📨 اعتراضات الطلاب</h3>
+<div id="objectionsList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageNotices">
+<h3>🔔 إرسال إشعار</h3>
+<textarea id="noticeText" placeholder="اكتب نص الإشعار"></textarea>
+<button onclick="addNotice()">نشر الإشعار</button>
+<div id="noticesList"></div>
 <button onclick="hideSections()">رجوع</button>
 </div>
 
@@ -188,77 +329,1167 @@ footer strong{color:#f5ca42}
 
 <footer>
 <p>إعداد وتطوير المهندس عبدالله حسام العبيدي</p>
-<strong>Albaghdady School © 2026</strong>
+<strong>Albaghdady School ©️ 2026</strong>
 </footer>
 
 <script>
-let currentRole="";
+const STORE_KEY = "albaghdady_demo_portal_v1";
+let currentRole = "";
+let currentUser = null;
+let data = loadData();
+
+function initialData(){
+ return {
+  teachers:[],
+  students:[{name:"أحمد محمد",id:"1001",pass:"123456",className:"الرابع العلمي / أ"}],
+  classes:["الرابع العلمي / أ","الخامس العلمي / أ"],
+  timetables:{"الرابع العلمي / أ":"الأحد - الرياضيات - 8:00\nالاثنين - اللغة العربية - 9:00\nالثلاثاء - اللغة الإنجليزية - 10:00\nالأربعاء - الفيزياء - 8:00\nالخميس - الكيمياء - 9:00"},
+  attendance:[],
+  grades:[],
+  objections:[],
+  notices:["مرحباً بكم في بوابة مدرسة ثانوية البغدادي - إشعار تجريبي."]
+ };
+}
+
+function loadData(){
+ try{
+  const saved=localStorage.getItem(STORE_KEY);
+  return saved?JSON.parse(saved):initialData();
+ }catch(e){return initialData();}
+}
+
+function saveData(){
+ localStorage.setItem(STORE_KEY,JSON.stringify(data));
+}
 
 function openLogin(role){
-currentRole=role;
-document.getElementById("loginTitle").textContent=
-role==="student"?"دخول الطالب":
-role==="teacher"?"دخول المدرس":"دخول الإدارة";
-document.getElementById("loginBox").style.display="flex";
-document.getElementById("username").value="";
-document.getElementById("password").value="";
+ currentRole=role;
+ document.getElementById("loginTitle").textContent=role==="student"?"دخول الطالب":role==="teacher"?"دخول المدرس":"دخول المدير";
+ document.getElementById("demoCredentials").innerHTML=role==="admin"?
+ "حساب المدير التجريبي: <b>admin</b><br>كلمة المرور: <b>admin123</b>":
+ role==="student"?"حساب الطالب التجريبي: <b>1001</b><br>كلمة المرور: <b>123456</b>":
+ "أضف حساب المدرس من لوحة المدير أولاً.";
+ document.getElementById("username").placeholder=role==="student"?"رقم الطالب":"اسم المستخدم";
+ document.getElementById("loginBox").style.display="flex";
+ document.getElementById("username").value="";
+ document.getElementById("password").value="";
 }
 
 function closeLogin(){
-document.getElementById("loginBox").style.display="none";
+ document.getElementById("loginBox").style.display="none";
 }
 
 function login(){
-let username=document.getElementById("username").value.trim();
-let password=document.getElementById("password").value;
+ const username=document.getElementById("username").value.trim();
+ const password=document.getElementById("password").value;
 
-if(currentRole==="student" && username==="1001" && password==="123456"){
-closeLogin();
-document.getElementById("mainPortals").style.display="none";
-document.querySelector(".welcome").style.display="none";
-document.querySelector(".school").style.display="none";
-document.getElementById("dashboard").style.display="block";
-}else if(currentRole==="teacher" || currentRole==="admin"){
-alert("حسابات المدرسين والإدارة غير مفعّلة في النسخة التجريبية.");
-}else{
-alert("رقم الطالب أو كلمة المرور غير صحيحة.");
-}
+ if(currentRole==="admin" && username==="admin" && password==="admin123"){
+  currentUser={role:"admin",id:"admin",name:"المدير"};
+  enterDashboard("adminDashboard");return;
+ }
+
+ if(currentRole==="student"){
+  const s=data.students.find(x=>x.id===username && x.pass===password);
+  if(s){currentUser={...s,role:"student"};renderStudent();enterDashboard("studentDashboard");return;}
+ }
+
+ if(currentRole==="teacher"){
+  const t=data.teachers.find(x=>x.id===username && x.pass===password);
+  if(t){currentUser={...t,role:"teacher"};renderTeacher();enterDashboard("teacherDashboard");return;}
+ }
+
+ alert("اسم المستخدم أو كلمة المرور غير صحيحة.");
 }
 
-function showSection(id){
-hideSections();
-document.getElementById(id).style.display="block";
-}
-
-function hideSections(){
-document.querySelectorAll(".section-view").forEach(function(section){
-section.style.display="none";
-});
+function enterDashboard(id){
+ closeLogin();
+ ["mainPortals","welcome","schoolBanner"].forEach(x=>document.getElementById(x).style.display="none");
+ ["studentDashboard","teacherDashboard","adminDashboard"].forEach(x=>document.getElementById(x).style.display="none");
+ document.getElementById(id).style.display="block";
+ if(id==="adminDashboard")renderAdmin();
+ window.scrollTo(0,0);
 }
 
 function logout(){
-hideSections();
-document.getElementById("dashboard").style.display="none";
-document.getElementById("mainPortals").style.display="grid";
-document.querySelector(".welcome").style.display="block";
-document.querySelector(".school").style.display="block";
+ hideSections();
+ ["studentDashboard","teacherDashboard","adminDashboard"].forEach(x=>document.getElementById(x).style.display="none");
+ ["mainPortals","welcome","schoolBanner"].forEach(x=>document.getElementById(x).style.display="");
+ currentUser=null;currentRole="";
+ window.scrollTo(0,0);
+}
+
+function showSection(id){
+ hideSections();
+ const el=document.getElementById(id);
+ if(el)el.style.display="block";
+
+ if(id==="manageTeachers")renderTeachers();
+ if(id==="manageStudents")renderStudents();
+ if(id==="manageClasses")renderClasses();
+ if(id==="manageTimetable")renderTimetables();
+ if(id==="manageAttendance")renderAttendance();
+ if(id==="manageGrades")renderGrades();
+ if(id==="manageObjections")renderObjections();
+ if(id==="manageNotices")renderNotices();
+}
+
+function hideSections(){
+ document.querySelectorAll(".section-view").forEach(s=>s.style.display="none");
+}
+
+function addTeacher(){
+ const name=val("newTeacherName");
+ const id=val("newTeacherId");
+ const pass=val("newTeacherPass");
+ const subject=val("newTeacherSubject");
+
+ if(!name||!id||!pass){
+  msg("teacherFormMessage","يرجى ملء الاسم والرقم وكلمة المرور.","danger");return;
+ }
+
+ if(data.teachers.some(x=>x.id===id)||data.students.some(x=>x.id===id)){
+  msg("teacherFormMessage","هذا الرقم مستخدم مسبقاً.","danger");return;
+ }
+
+ data.teachers.push({name,id,pass,subject});
+ saveData();
+
+ ["newTeacherName","newTeacherId","newTeacherPass","newTeacherSubject"].forEach(clear);
+ msg("teacherFormMessage","تمت إضافة المدرس تجريبياً بنجاح.","success");
+}
+
+function addStudent(){
+ const name=val("newStudentName");
+ const id=val("newStudentId");
+ const pass=val("newStudentPass");
+ const className=val("newStudentClass");
+
+ if(!name||!id||!pass){
+  msg("studentFormMessage","يرجى ملء الاسم والرقم وكلمة المرور.","danger");return;
+ }
+
+ if(data.students.some(x=>x.id===id)||data.teachers.some(x=>x.id===id)){
+  msg("studentFormMessage","هذا الرقم مستخدم مسبقاً.","danger");return;
+ }
+
+ data.students.push({name,id,pass,className});
+ if(className&&!data.classes.includes(className))data.classes.push(className);
+
+ saveData();
+ ["newStudentName","newStudentId","newStudentPass","newStudentClass"].forEach(clear);
+ msg("studentFormMessage","تمت إضافة الطالب تجريبياً بنجاح.","success");
+}
+
+function addClass(){
+ const name=val("className");
+ if(!name){alert("اكتب اسم الصف والشعبة.");return;}
+ if(!data.classes.includes(name))data.classes.push(name);
+ saveData();
+ clear("className");
+ renderClasses();
+}
+
+function saveTimetable(){
+ const c=val("timetableClass");
+ const t=val("timetableText");
+
+ if(!c||!t){alert("اكتب الصف والجدول.");return;}
+
+ data.timetables[c]=t;
+ if(!data.classes.includes(c))data.classes.push(c);
+
+ saveData();
+ clear("timetableText");
+ renderTimetables();
+ alert("تم حفظ الجدول التجريبي.");
+}
+
+function saveAttendance(){
+ const id=val("attendanceStudentId");
+ const status=val("attendanceStatus");
+ const s=data.students.find(x=>x.id===id);
+
+ if(!s){alert("لم يتم العثور على طالب بهذا الرقم.");return;}
+
+ data.attendance.push({
+  id,
+  name:s.name,
+  status,
+  date:new Date().toLocaleDateString("ar-IQ")
+ });
+
+ saveData();
+ renderAttendance();
+ clear("attendanceStudentId");
+}
+
+function saveGrade(){
+ const id=val("gradeStudentId");
+ const subject=val("gradeSubject");
+ const grade=val("gradeValue");
+ const s=data.students.find(x=>x.id===id);
+
+ if(!s||!subject||grade===""||Number(grade)<0||Number(grade)>100){
+  alert("تحقق من رقم الطالب والمادة والدرجة (من 0 إلى 100).");return;
+ }
+
+ data.grades.push({id,name:s.name,subject,grade});
+ saveData();
+ renderGrades();
+
+ clear("gradeStudentId");
+ clear("gradeSubject");
+ clear("gradeValue");
 }
 
 function sendObjection(){
-let subject=document.getElementById("objectionSubject").value.trim();
-let message=document.getElementById("objectionText").value.trim();
+ const subject=val("objectionSubject");
+ const text=val("objectionText");
 
-if(subject==="" || message===""){
-alert("يرجى كتابة موضوع الاعتراض والتفاصيل.");
-return;
+ if(!subject||!text){alert("يرجى كتابة الموضوع والتفاصيل.");return;}
+
+ data.objections.push({
+  studentId:currentUser.id,
+  studentName:currentUser.name,
+  subject,
+  text,
+  date:new Date().toLocaleDateString("ar-IQ")
+ });
+
+ saveData();
+ document.getElementById("objectionMessage").textContent="تم إرسال الاعتراض التجريبي إلى لوحة المدير.";
+
+ clear("objectionSubject");
+ clear("objectionText");
 }
 
-document.getElementById("objectionMessage").textContent=
-"تم تسجيل الاعتراض تجريبياً داخل الصفحة فقط.";
-document.getElementById("objectionSubject").value="";
-document.getElementById("objectionText").value="";
+function addNotice(){
+ const text=val("noticeText");
+
+ if(!text){alert("اكتب نص الإشعار.");return;}
+
+ data.notices.unshift(text);
+ saveData();
+ clear("noticeText");
+ renderNotices();
+ alert("تم نشر الإشعار التجريبي.");
+}
+
+function renderAdmin(){}
+
+function renderTeachers(){
+ document.getElementById("teachersTable").innerHTML=table(
+  ["الاسم","الرقم","المادة","إجراء"],
+  data.teachers.map((x,i)=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.subject||"-"),
+   `<button class="close" onclick="deleteTeacher(${i})">حذف</button>`
+  ])
+ );
+}
+
+function renderStudents(){
+ document.getElementById("studentsTable").innerHTML=table(
+  ["الاسم","الرقم","الصف والشعبة","إجراء"],
+  data.students.map((x,i)=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.className||"-"),
+   `<button class="close" onclick="deleteStudent(${i})">حذف</button>`
+  ])
+ );
+}
+
+function deleteTeacher(i){
+ if(confirm("هل تريد حذف هذا المدرس؟")){
+  data.teachers.splice(i,1);
+  saveData();
+  renderTeachers();
+ }
+}
+
+function deleteStudent(i){
+ if(confirm("هل تريد حذف هذا الطالب؟")){
+  data.students.splice(i,1);
+  saveData();
+  renderStudents();
+ }
+}
+
+function renderClasses(){
+ document.getElementById("classesList").innerHTML=
+ "<h4>الصفوف المسجلة</h4>"+
+ (data.classes.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||"لا توجد صفوف بعد.");
+}
+
+function renderTimetables(){
+ document.getElementById("timetablesList").innerHTML=
+ "<h4>الجداول المحفوظة</h4>"+
+ Object.entries(data.timetables).map(([c,t])=>
+  `<div class="notice"><b>${esc(c)}</b><pre style="white-space:pre-wrap;font-family:inherit">${esc(t)}</pre></div>`
+ ).join("");
+}
+
+function renderAttendance(){
+ document.getElementById("attendanceList").innerHTML=table(
+  ["الطالب","الرقم","الحالة","التاريخ"],
+  data.attendance.map(x=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.status),
+   esc(x.date)
+  ])
+ );
+}
+
+function renderGrades(){
+ document.getElementById("gradesList").innerHTML=table(
+  ["الطالب","الرقم","المادة","الدرجة"],
+  data.grades.map(x=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.subject),
+   esc(x.grade)
+  ])
+ );
+}
+
+function renderObjections(){
+ document.getElementById("objectionsList").innerHTML=
+ data.objections.length?
+ data.objections.map(x=>
+  `<div class="notice"><b>${esc(x.studentName)} (${esc(x.studentId)})</b> - ${esc(x.date)}<br><b>${esc(x.subject)}</b><br>${esc(x.text)}</div>`
+ ).join(""):
+ "لا توجد اعتراضات حالياً.";
+}
+
+function renderNotices(){
+ document.getElementById("noticesList").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function renderStudent(){
+ document.getElementById("studentInfo").innerHTML=
+ `<strong>اسم الطالب:</strong> ${esc(currentUser.name)}<br>
+ <strong>رقم الطالب:</strong> ${esc(currentUser.id)}<br>
+ <strong>الصف:</strong> ${esc(currentUser.className||"-")}<br>
+ <strong>المدرسة:</strong> ثانوية البغدادي للبنين`;
+
+ const tt=data.timetables[currentUser.className]||"لم يضف المدير جدولاً لهذا الصف بعد.";
+
+ document.getElementById("studentTimetableContent").innerHTML=
+ `<pre style="white-space:pre-wrap;font-family:inherit">${esc(tt)}</pre>`;
+
+ const gs=data.grades.filter(x=>x.id===currentUser.id);
+
+ document.getElementById("studentResultsContent").innerHTML=
+ gs.length?
+ table(["المادة","الدرجة"],gs.map(x=>[esc(x.subject),esc(x.grade)])):
+ "لا توجد درجات مسجلة حالياً.";
+
+ const at=data.attendance.filter(x=>x.id===currentUser.id);
+
+ document.getElementById("studentAttendanceContent").innerHTML=
+ at.length?
+ table(["الحالة","التاريخ"],at.map(x=>[esc(x.status),esc(x.date)])):
+ "لا توجد سجلات حضور بعد.";
+
+ document.getElementById("studentNoticesContent").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function renderTeacher(){
+ document.getElementById("teacherWelcome").textContent=
+ `مرحباً ${currentUser.name} - المادة: ${currentUser.subject||"غير محددة"}`;
+
+ document.getElementById("teacherNotices").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function table(headers,rows){
+ if(!rows.length)return "<p>لا توجد بيانات حالياً.</p>";
+
+ return "<table><tr>"+
+ headers.map(h=>`<th>${h}</th>`).join("")+
+ "</tr>"+
+ rows.map(r=>"<tr>"+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+
+ "</table>";
+}
+
+function val(id){
+ return document.getElementById(id).value.trim();
+}
+
+function clear(id){
+ document.getElementById(id).value="";
+}
+
+function msg(id,text,cls){
+ const e=document.getElementById(id);
+ e.textContent=text;
+ e.className=cls;
+}
+
+function esc(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
 }
 </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>بوابة مدرسة ثانوية البغدادي للبنين</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial;background:#edf4ff;color:#102b55}
+header{background:#061d50;color:white;text-align:center;padding:22px;border-bottom:5px solid #e9bd38}
+.school{text-align:center;background:#09265c;color:white;margin:25px auto;padding:30px 12px;width:92%;border:4px solid #e9bd38;border-radius:22px}
+.school h1{font-size:28px}
+.school h2{color:#f5ca42}
+.welcome{text-align:center;padding:15px}
+.portals{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1050px;margin:25px auto;padding:15px}
+.portal{background:white;border:2px solid #d5ad32;border-radius:18px;padding:25px 15px;text-align:center;box-shadow:0 4px 12px #0002}
+.portal .icon{font-size:45px}
+.portal h2{margin:12px}
+.portal p{line-height:1.8}
+button{background:#0879d1;color:white;border:0;border-radius:9px;padding:12px 18px;font-size:16px;cursor:pointer;margin:5px 2px}
+button:hover{filter:brightness(.94)}
+.portal button{width:100%}
+.teacher button{background:#07884f}
+.admin-button{background:#d99400}
+.login-box{display:none;position:fixed;inset:0;background:#0009;z-index:5;align-items:center;justify-content:center;padding:15px}
+.login-content{background:white;padding:25px;border-radius:18px;width:100%;max-width:390px;text-align:center}
+input,textarea,select{width:100%;padding:12px;margin:8px 0;border:1px solid #aaa;border-radius:8px;font-size:16px;font-family:inherit}
+textarea{min-height:85px;resize:vertical}
+.login-content button{width:100%}
+.close{background:#b92727}
+.dashboard{display:none;max-width:1100px;margin:25px auto;padding:15px}
+.dashboard-head{background:#061d50;color:white;text-align:center;padding:22px;border-radius:18px;border:3px solid #e9bd38}
+.dashboard-head h2{color:#f5ca42}
+.student-info,.info-box{background:white;padding:18px;border-radius:12px;margin:18px 0;line-height:2}
+.student-menu,.admin-menu{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.student-card,.admin-card{background:white;border:2px solid #d5ad32;border-radius:15px;text-align:center;padding:22px;cursor:pointer}
+.admin-card{min-height:145px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.student-card .big-icon,.admin-card .big-icon{font-size:35px}
+.admin-card h3{margin:8px 0}
+.section-view{display:none;background:white;border-radius:15px;padding:20px;margin-top:18px;line-height:2;overflow-x:auto}
+.section-view h3{color:#0879d1}
+table{width:100%;border-collapse:collapse;margin-top:12px;background:white}
+th,td{border:1px solid #bbb;padding:10px;text-align:center}
+th{background:#e5f1ff}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.form-actions{margin-top:8px}
+.small{font-size:13px;color:#555;line-height:1.8}
+.notice{background:#fff8df;border-right:4px solid #d99400;padding:12px;border-radius:8px;margin:12px 0}
+.success{color:#087b43;font-weight:bold}
+.danger{color:#b92727}
+footer{background:#061d50;color:white;text-align:center;padding:22px;margin-top:35px;line-height:2}
+footer strong{color:#f5ca42}
+@media(max-width:700px){
+.portals{grid-template-columns:1fr;max-width:420px}
+.school h1{font-size:22px}
+.student-menu,.admin-menu,.form-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
 
+<header>
+<h2>📘 Albaghdady School Portal</h2>
+<p>بوابة مدرسة ثانوية البغدادي للبنين</p>
+</header>
+
+<section class="school" id="schoolBanner">
+<h1>🎓 مدرسة ثانوية البغدادي للبنين</h1>
+<h2>Albaghdady Secondary School</h2>
+</section>
+
+<section class="welcome" id="welcome">
+<h2>أهلاً وسهلاً بكم</h2>
+<p>في البوابة الإلكترونية لمدرسة ثانوية البغدادي للبنين</p>
+<p>Welcome to Albaghdady Secondary School</p>
+</section>
+
+<section class="portals" id="mainPortals">
+<div class="portal">
+<div class="icon">🎓</div><h2>بوابة الطالب</h2>
+<p>متابعة الحضور والغياب والجدول الدراسي والنتائج</p>
+<button onclick="openLogin('student')">دخول الطالب</button>
+</div>
+
+<div class="portal teacher">
+<div class="icon">👨‍🏫</div><h2>بوابة المدرس</h2>
+<p>بوابة خاصة بالمدرسين والموظفين</p>
+<button onclick="openLogin('teacher')">دخول المدرس</button>
+</div>
+
+<div class="portal">
+<div class="icon">🔐</div><h2>الإدارة</h2>
+<p>بوابة إدارة المدرسة</p>
+<button class="admin-button" onclick="openLogin('admin')">دخول الإدارة</button>
+</div>
+</section>
+
+<div class="login-box" id="loginBox">
+<div class="login-content">
+<h2 id="loginTitle">تسجيل الدخول</h2>
+<input id="username" type="text" placeholder="اسم المستخدم أو الرقم">
+<input id="password" type="password" placeholder="كلمة المرور">
+<button onclick="login()">دخول</button>
+<button class="close" onclick="closeLogin()">إغلاق</button>
+<p class="small" id="demoCredentials">حساب الطالب التجريبي: 1001<br>كلمة المرور: 123456</p>
+</div>
+</div>
+
+<!-- لوحة الطالب -->
+<section class="dashboard" id="studentDashboard">
+<div class="dashboard-head">
+<h2>🎓 لوحة الطالب الإلكترونية</h2>
+<p>مرحباً بك في حسابك المدرسي</p>
+</div>
+
+<div class="student-info" id="studentInfo"></div>
+
+<div class="student-menu">
+<div class="student-card" onclick="showSection('studentTimetable')">
+<div class="big-icon">📅</div><h3>الجدول الدراسي</h3>
+</div>
+<div class="student-card" onclick="showSection('studentResults')">
+<div class="big-icon">📚</div><h3>النتائج والدرجات</h3>
+</div>
+<div class="student-card" onclick="showSection('studentAttendance')">
+<div class="big-icon">📝</div><h3>الحضور والغياب</h3>
+</div>
+<div class="student-card" onclick="showSection('studentObjections')">
+<div class="big-icon">📨</div><h3>الاعتراضات</h3>
+</div>
+<div class="student-card" onclick="showSection('studentNotices')">
+<div class="big-icon">🔔</div><h3>الإشعارات</h3>
+</div>
+</div>
+
+<div class="section-view" id="studentTimetable">
+<h3>📅 الجدول الدراسي</h3>
+<div id="studentTimetableContent"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="studentResults">
+<h3>📚 النتائج والدرجات</h3>
+<div id="studentResultsContent"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="studentAttendance">
+<h3>📝 الحضور والغياب</h3>
+<div id="studentAttendanceContent"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="studentObjections">
+<h3>📨 تقديم اعتراض</h3>
+<input id="objectionSubject" placeholder="موضوع الاعتراض">
+<textarea id="objectionText" placeholder="اكتب تفاصيل الاعتراض"></textarea>
+<button onclick="sendObjection()">إرسال الاعتراض التجريبي</button>
+<p id="objectionMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="studentNotices">
+<h3>🔔 الإشعارات</h3>
+<div id="studentNoticesContent"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<!-- لوحة المدرس التجريبية -->
+<section class="dashboard" id="teacherDashboard">
+<div class="dashboard-head">
+<h2>👨‍🏫 لوحة المدرس</h2>
+<p id="teacherWelcome"></p>
+</div>
+<div class="info-box">هذه لوحة مدرس تجريبية. في هذه النسخة يستطيع المدرس الاطلاع على بيانات صفه التجريبية فقط.</div>
+<div class="section-view" style="display:block">
+<h3>📢 إشعارات الإدارة</h3>
+<div id="teacherNotices"></div>
+</div>
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<!-- لوحة المدير -->
+<section class="dashboard" id="adminDashboard">
+<div class="dashboard-head">
+<h2>🛡️ لوحة المدير الرئيسية</h2>
+<p>Albaghdady School Administration</p>
+<p style="color:#70d080;font-weight:bold">صلاحيات المدير التجريبية</p>
+</div>
+
+<div class="notice small">
+هذه نسخة تجريبية محلية. البيانات تحفظ في متصفح هذا الجهاز فقط، ولا تنتقل تلقائياً إلى أجهزة أخرى.
+</div>
+
+<div class="admin-menu">
+<div class="admin-card" onclick="showSection('manageStudents')">
+<div class="big-icon">👥</div><h3>إدارة الطلاب</h3>
+</div>
+<div class="admin-card" onclick="showSection('addStudent')">
+<div class="big-icon">👤</div><h3>إضافة طالب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageTeachers')">
+<div class="big-icon">🎓</div><h3>إدارة المدرسين</h3>
+</div>
+<div class="admin-card" onclick="showSection('addTeacher')">
+<div class="big-icon">👨‍🏫</div><h3>إضافة مدرس</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageClasses')">
+<div class="big-icon">🏫</div><h3>إدارة الصفوف والشُعب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageTimetable')">
+<div class="big-icon">📅</div><h3>الجداول الدراسية</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageAttendance')">
+<div class="big-icon">📝</div><h3>الحضور والغياب</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageGrades')">
+<div class="big-icon">📊</div><h3>النتائج والدرجات</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageObjections')">
+<div class="big-icon">📨</div><h3>الاعتراضات</h3>
+</div>
+<div class="admin-card" onclick="showSection('manageNotices')">
+<div class="big-icon">🔔</div><h3>الإشعارات</h3>
+</div>
+</div>
+
+<div class="section-view" id="addTeacher">
+<h3>➕ إضافة مدرس</h3>
+<div class="form-grid">
+<input id="newTeacherName" placeholder="اسم المدرس">
+<input id="newTeacherId" placeholder="رقم المدرس / اسم المستخدم">
+<input id="newTeacherPass" placeholder="كلمة المرور التجريبية">
+<input id="newTeacherSubject" placeholder="المادة">
+</div>
+<button onclick="addTeacher()">حفظ المدرس</button>
+<p id="teacherFormMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageTeachers">
+<h3>🎓 إدارة المدرسين</h3>
+<div id="teachersTable"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="addStudent">
+<h3>➕ إضافة طالب</h3>
+<div class="form-grid">
+<input id="newStudentName" placeholder="اسم الطالب">
+<input id="newStudentId" placeholder="رقم الطالب / اسم المستخدم">
+<input id="newStudentPass" placeholder="كلمة المرور التجريبية">
+<input id="newStudentClass" placeholder="الصف والشعبة، مثال: الرابع / أ">
+</div>
+<button onclick="addStudent()">حفظ الطالب</button>
+<p id="studentFormMessage"></p>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageStudents">
+<h3>👥 إدارة الطلاب</h3>
+<div id="studentsTable"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageClasses">
+<h3>🏫 الصفوف والشُعب</h3>
+<input id="className" placeholder="اسم الصف والشعبة، مثال: الخامس العلمي / أ">
+<button onclick="addClass()">إضافة الصف/الشعبة</button>
+<div id="classesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageTimetable">
+<h3>📅 إضافة جدول دراسي</h3>
+<input id="timetableClass" placeholder="الصف والشعبة">
+<textarea id="timetableText" placeholder="اكتب الجدول: الأحد - رياضيات - 8:00&#10;الاثنين - عربي - 9:00"></textarea>
+<button onclick="saveTimetable()">حفظ الجدول</button>
+<div id="timetablesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageAttendance">
+<h3>📝 تسجيل حضور أو غياب</h3>
+<div class="form-grid">
+<input id="attendanceStudentId" placeholder="رقم الطالب">
+<select id="attendanceStatus">
+<option value="حاضر">حاضر</option>
+<option value="غائب">غائب</option>
+<option value="متأخر">متأخر</option>
+</select>
+</div>
+<button onclick="saveAttendance()">حفظ الحالة</button>
+<div id="attendanceList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageGrades">
+<h3>📊 إدخال درجة</h3>
+<div class="form-grid">
+<input id="gradeStudentId" placeholder="رقم الطالب">
+<input id="gradeSubject" placeholder="المادة">
+<input id="gradeValue" type="number" min="0" max="100" placeholder="الدرجة من 100">
+</div>
+<button onclick="saveGrade()">حفظ الدرجة</button>
+<div id="gradesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageObjections">
+<h3>📨 اعتراضات الطلاب</h3>
+<div id="objectionsList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<div class="section-view" id="manageNotices">
+<h3>🔔 إرسال إشعار</h3>
+<textarea id="noticeText" placeholder="اكتب نص الإشعار"></textarea>
+<button onclick="addNotice()">نشر الإشعار</button>
+<div id="noticesList"></div>
+<button onclick="hideSections()">رجوع</button>
+</div>
+
+<button class="close" onclick="logout()">تسجيل الخروج</button>
+</section>
+
+<footer>
+<p>إعداد وتطوير المهندس عبدالله حسام العبيدي</p>
+<strong>Albaghdady School ©️ 2026</strong>
+</footer>
+
+<script>
+const STORE_KEY = "albaghdady_demo_portal_v1";
+let currentRole = "";
+let currentUser = null;
+let data = loadData();
+
+function initialData(){
+ return {
+  teachers:[],
+  students:[{name:"أحمد محمد",id:"1001",pass:"123456",className:"الرابع العلمي / أ"}],
+  classes:["الرابع العلمي / أ","الخامس العلمي / أ"],
+  timetables:{"الرابع العلمي / أ":"الأحد - الرياضيات - 8:00\nالاثنين - اللغة العربية - 9:00\nالثلاثاء - اللغة الإنجليزية - 10:00\nالأربعاء - الفيزياء - 8:00\nالخميس - الكيمياء - 9:00"},
+  attendance:[],
+  grades:[],
+  objections:[],
+  notices:["مرحباً بكم في بوابة مدرسة ثانوية البغدادي - إشعار تجريبي."]
+ };
+}
+
+function loadData(){
+ try{
+  const saved=localStorage.getItem(STORE_KEY);
+  return saved?JSON.parse(saved):initialData();
+ }catch(e){return initialData();}
+}
+
+function saveData(){
+ localStorage.setItem(STORE_KEY,JSON.stringify(data));
+}
+
+function openLogin(role){
+ currentRole=role;
+ document.getElementById("loginTitle").textContent=role==="student"?"دخول الطالب":role==="teacher"?"دخول المدرس":"دخول المدير";
+ document.getElementById("demoCredentials").innerHTML=role==="admin"?
+ "حساب المدير التجريبي: <b>admin</b><br>كلمة المرور: <b>admin123</b>":
+ role==="student"?"حساب الطالب التجريبي: <b>1001</b><br>كلمة المرور: <b>123456</b>":
+ "أضف حساب المدرس من لوحة المدير أولاً.";
+ document.getElementById("username").placeholder=role==="student"?"رقم الطالب":"اسم المستخدم";
+ document.getElementById("loginBox").style.display="flex";
+ document.getElementById("username").value="";
+ document.getElementById("password").value="";
+}
+
+function closeLogin(){
+ document.getElementById("loginBox").style.display="none";
+}
+
+function login(){
+ const username=document.getElementById("username").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(currentRole==="admin" && username==="admin" && password==="admin123"){
+  currentUser={role:"admin",id:"admin",name:"المدير"};
+  enterDashboard("adminDashboard");return;
+ }
+
+ if(currentRole==="student"){
+  const s=data.students.find(x=>x.id===username && x.pass===password);
+  if(s){currentUser={...s,role:"student"};renderStudent();enterDashboard("studentDashboard");return;}
+ }
+
+ if(currentRole==="teacher"){
+  const t=data.teachers.find(x=>x.id===username && x.pass===password);
+  if(t){currentUser={...t,role:"teacher"};renderTeacher();enterDashboard("teacherDashboard");return;}
+ }
+
+ alert("اسم المستخدم أو كلمة المرور غير صحيحة.");
+}
+
+function enterDashboard(id){
+ closeLogin();
+ ["mainPortals","welcome","schoolBanner"].forEach(x=>document.getElementById(x).style.display="none");
+ ["studentDashboard","teacherDashboard","adminDashboard"].forEach(x=>document.getElementById(x).style.display="none");
+ document.getElementById(id).style.display="block";
+ if(id==="adminDashboard")renderAdmin();
+ window.scrollTo(0,0);
+}
+
+function logout(){
+ hideSections();
+ ["studentDashboard","teacherDashboard","adminDashboard"].forEach(x=>document.getElementById(x).style.display="none");
+ ["mainPortals","welcome","schoolBanner"].forEach(x=>document.getElementById(x).style.display="");
+ currentUser=null;currentRole="";
+ window.scrollTo(0,0);
+}
+
+function showSection(id){
+ hideSections();
+ const el=document.getElementById(id);
+ if(el)el.style.display="block";
+
+ if(id==="manageTeachers")renderTeachers();
+ if(id==="manageStudents")renderStudents();
+ if(id==="manageClasses")renderClasses();
+ if(id==="manageTimetable")renderTimetables();
+ if(id==="manageAttendance")renderAttendance();
+ if(id==="manageGrades")renderGrades();
+ if(id==="manageObjections")renderObjections();
+ if(id==="manageNotices")renderNotices();
+}
+
+function hideSections(){
+ document.querySelectorAll(".section-view").forEach(s=>s.style.display="none");
+}
+
+function addTeacher(){
+ const name=val("newTeacherName");
+ const id=val("newTeacherId");
+ const pass=val("newTeacherPass");
+ const subject=val("newTeacherSubject");
+
+ if(!name||!id||!pass){
+  msg("teacherFormMessage","يرجى ملء الاسم والرقم وكلمة المرور.","danger");return;
+ }
+
+ if(data.teachers.some(x=>x.id===id)||data.students.some(x=>x.id===id)){
+  msg("teacherFormMessage","هذا الرقم مستخدم مسبقاً.","danger");return;
+ }
+
+ data.teachers.push({name,id,pass,subject});
+ saveData();
+
+ ["newTeacherName","newTeacherId","newTeacherPass","newTeacherSubject"].forEach(clear);
+ msg("teacherFormMessage","تمت إضافة المدرس تجريبياً بنجاح.","success");
+}
+
+function addStudent(){
+ const name=val("newStudentName");
+ const id=val("newStudentId");
+ const pass=val("newStudentPass");
+ const className=val("newStudentClass");
+
+ if(!name||!id||!pass){
+  msg("studentFormMessage","يرجى ملء الاسم والرقم وكلمة المرور.","danger");return;
+ }
+
+ if(data.students.some(x=>x.id===id)||data.teachers.some(x=>x.id===id)){
+  msg("studentFormMessage","هذا الرقم مستخدم مسبقاً.","danger");return;
+ }
+
+ data.students.push({name,id,pass,className});
+ if(className&&!data.classes.includes(className))data.classes.push(className);
+
+ saveData();
+ ["newStudentName","newStudentId","newStudentPass","newStudentClass"].forEach(clear);
+ msg("studentFormMessage","تمت إضافة الطالب تجريبياً بنجاح.","success");
+}
+
+function addClass(){
+ const name=val("className");
+ if(!name){alert("اكتب اسم الصف والشعبة.");return;}
+ if(!data.classes.includes(name))data.classes.push(name);
+ saveData();
+ clear("className");
+ renderClasses();
+}
+
+function saveTimetable(){
+ const c=val("timetableClass");
+ const t=val("timetableText");
+
+ if(!c||!t){alert("اكتب الصف والجدول.");return;}
+
+ data.timetables[c]=t;
+ if(!data.classes.includes(c))data.classes.push(c);
+
+ saveData();
+ clear("timetableText");
+ renderTimetables();
+ alert("تم حفظ الجدول التجريبي.");
+}
+
+function saveAttendance(){
+ const id=val("attendanceStudentId");
+ const status=val("attendanceStatus");
+ const s=data.students.find(x=>x.id===id);
+
+ if(!s){alert("لم يتم العثور على طالب بهذا الرقم.");return;}
+
+ data.attendance.push({
+  id,
+  name:s.name,
+  status,
+  date:new Date().toLocaleDateString("ar-IQ")
+ });
+
+ saveData();
+ renderAttendance();
+ clear("attendanceStudentId");
+}
+
+function saveGrade(){
+ const id=val("gradeStudentId");
+ const subject=val("gradeSubject");
+ const grade=val("gradeValue");
+ const s=data.students.find(x=>x.id===id);
+
+ if(!s||!subject||grade===""||Number(grade)<0||Number(grade)>100){
+  alert("تحقق من رقم الطالب والمادة والدرجة (من 0 إلى 100).");return;
+ }
+
+ data.grades.push({id,name:s.name,subject,grade});
+ saveData();
+ renderGrades();
+
+ clear("gradeStudentId");
+ clear("gradeSubject");
+ clear("gradeValue");
+}
+
+function sendObjection(){
+ const subject=val("objectionSubject");
+ const text=val("objectionText");
+
+ if(!subject||!text){alert("يرجى كتابة الموضوع والتفاصيل.");return;}
+
+ data.objections.push({
+  studentId:currentUser.id,
+  studentName:currentUser.name,
+  subject,
+  text,
+  date:new Date().toLocaleDateString("ar-IQ")
+ });
+
+ saveData();
+ document.getElementById("objectionMessage").textContent="تم إرسال الاعتراض التجريبي إلى لوحة المدير.";
+
+ clear("objectionSubject");
+ clear("objectionText");
+}
+
+function addNotice(){
+ const text=val("noticeText");
+
+ if(!text){alert("اكتب نص الإشعار.");return;}
+
+ data.notices.unshift(text);
+ saveData();
+ clear("noticeText");
+ renderNotices();
+ alert("تم نشر الإشعار التجريبي.");
+}
+
+function renderAdmin(){}
+
+function renderTeachers(){
+ document.getElementById("teachersTable").innerHTML=table(
+  ["الاسم","الرقم","المادة","إجراء"],
+  data.teachers.map((x,i)=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.subject||"-"),
+   `<button class="close" onclick="deleteTeacher(${i})">حذف</button>`
+  ])
+ );
+}
+
+function renderStudents(){
+ document.getElementById("studentsTable").innerHTML=table(
+  ["الاسم","الرقم","الصف والشعبة","إجراء"],
+  data.students.map((x,i)=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.className||"-"),
+   `<button class="close" onclick="deleteStudent(${i})">حذف</button>`
+  ])
+ );
+}
+
+function deleteTeacher(i){
+ if(confirm("هل تريد حذف هذا المدرس؟")){
+  data.teachers.splice(i,1);
+  saveData();
+  renderTeachers();
+ }
+}
+
+function deleteStudent(i){
+ if(confirm("هل تريد حذف هذا الطالب؟")){
+  data.students.splice(i,1);
+  saveData();
+  renderStudents();
+ }
+}
+
+function renderClasses(){
+ document.getElementById("classesList").innerHTML=
+ "<h4>الصفوف المسجلة</h4>"+
+ (data.classes.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||"لا توجد صفوف بعد.");
+}
+
+function renderTimetables(){
+ document.getElementById("timetablesList").innerHTML=
+ "<h4>الجداول المحفوظة</h4>"+
+ Object.entries(data.timetables).map(([c,t])=>
+  `<div class="notice"><b>${esc(c)}</b><pre style="white-space:pre-wrap;font-family:inherit">${esc(t)}</pre></div>`
+ ).join("");
+}
+
+function renderAttendance(){
+ document.getElementById("attendanceList").innerHTML=table(
+  ["الطالب","الرقم","الحالة","التاريخ"],
+  data.attendance.map(x=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.status),
+   esc(x.date)
+  ])
+ );
+}
+
+function renderGrades(){
+ document.getElementById("gradesList").innerHTML=table(
+  ["الطالب","الرقم","المادة","الدرجة"],
+  data.grades.map(x=>[
+   esc(x.name),
+   esc(x.id),
+   esc(x.subject),
+   esc(x.grade)
+  ])
+ );
+}
+
+function renderObjections(){
+ document.getElementById("objectionsList").innerHTML=
+ data.objections.length?
+ data.objections.map(x=>
+  `<div class="notice"><b>${esc(x.studentName)} (${esc(x.studentId)})</b> - ${esc(x.date)}<br><b>${esc(x.subject)}</b><br>${esc(x.text)}</div>`
+ ).join(""):
+ "لا توجد اعتراضات حالياً.";
+}
+
+function renderNotices(){
+ document.getElementById("noticesList").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function renderStudent(){
+ document.getElementById("studentInfo").innerHTML=
+ `<strong>اسم الطالب:</strong> ${esc(currentUser.name)}<br>
+ <strong>رقم الطالب:</strong> ${esc(currentUser.id)}<br>
+ <strong>الصف:</strong> ${esc(currentUser.className||"-")}<br>
+ <strong>المدرسة:</strong> ثانوية البغدادي للبنين`;
+
+ const tt=data.timetables[currentUser.className]||"لم يضف المدير جدولاً لهذا الصف بعد.";
+
+ document.getElementById("studentTimetableContent").innerHTML=
+ `<pre style="white-space:pre-wrap;font-family:inherit">${esc(tt)}</pre>`;
+
+ const gs=data.grades.filter(x=>x.id===currentUser.id);
+
+ document.getElementById("studentResultsContent").innerHTML=
+ gs.length?
+ table(["المادة","الدرجة"],gs.map(x=>[esc(x.subject),esc(x.grade)])):
+ "لا توجد درجات مسجلة حالياً.";
+
+ const at=data.attendance.filter(x=>x.id===currentUser.id);
+
+ document.getElementById("studentAttendanceContent").innerHTML=
+ at.length?
+ table(["الحالة","التاريخ"],at.map(x=>[esc(x.status),esc(x.date)])):
+ "لا توجد سجلات حضور بعد.";
+
+ document.getElementById("studentNoticesContent").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function renderTeacher(){
+ document.getElementById("teacherWelcome").textContent=
+ `مرحباً ${currentUser.name} - المادة: ${currentUser.subject||"غير محددة"}`;
+
+ document.getElementById("teacherNotices").innerHTML=
+ data.notices.map(x=>`<div class="notice">${esc(x)}</div>`).join("")||
+ "لا توجد إشعارات.";
+}
+
+function table(headers,rows){
+ if(!rows.length)return "<p>لا توجد بيانات حالياً.</p>";
+
+ return "<table><tr>"+
+ headers.map(h=>`<th>${h}</th>`).join("")+
+ "</tr>"+
+ rows.map(r=>"<tr>"+r.map(c=>`<td>${c}</td>`).join("")+"</tr>").join("")+
+ "</table>";
+}
+
+function val(id){
+ return document.getElementById(id).value.trim();
+}
+
+function clear(id){
+ document.getElementById(id).value="";
+}
+
+function msg(id,text,cls){
+ const e=document.getElementById(id);
+ e.textContent=text;
+ e.className=cls;
+}
+
+function esc(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+</script>
 </body>
 </html>
